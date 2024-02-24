@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  shipment.api:
+    image: shipmentapi
+    build:
+      context: .
+      dockerfile: Shipment.Api/Dockerfile
+    ports:
+        - "8090:8090"
+  order.api:
+    image: orderapi
+    build:
+      context: .
+      dockerfile: Order.Api/Dockerfile
+    ports:
+        - "8091:8091"
+  ApiGateway:
+    image: apigateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+        - "8000:8080"
+    depends_on:
+     - order.api
+     - shipment.api
